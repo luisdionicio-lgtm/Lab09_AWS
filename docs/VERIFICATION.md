@@ -9,3 +9,5 @@ Browser: selected a synthetic PNG via real file chooser, uploaded, received conf
 Detector executed once: warnings about src-less images used in hidden selection/preview containers, whose src is assigned on interaction; colored shadow on dialog in a light surface. Screenshots confirmed visible gallery image loaded. No placeholder images are published.
 
 The Docker demo uses public emulation credentials test/test, unrelated to AWS. No private credentials are committed. Runtime AWS credentials are mounted read-only and excluded from Docker build context and Git.
+
+Final UI review: targeted findings resolved (dialog accessible names, loaded-image search scope, 44px action targets). Browser verified JPG upload and named preview dialog. Physical phone testing and AWS 16-minute expiration still require user execution. Code formatted with Prettier; 7 backend tests and syntax checks passed afterward.

@@ -1,1 +1,102 @@
-{"palette":{"canvas":"#f3f5f7","paper":"#ffffff","ink":"#172c3b","secondary":"#526574","brand":"#245c83","line":"#d7e0e6","danger":"#a52e37"},"font":"Manrope","radii":{"panel":16,"image":12,"control":8},"mode":"operate","surface":"/"}
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T15:15:59.7206814Z",
+  "title": "Design System: Lumbre",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "dialog",
+        "value": "0 16px 60px #172c3b33",
+        "purpose": "Structural dialog elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "control-state",
+        "value": "150ms ease-out",
+        "purpose": "Button background and press transitions."
+      },
+      {
+        "name": "image-hover",
+        "value": "250ms ease-out",
+        "purpose": "Fine-pointer image crop scale to 1.025."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "tablet",
+        "value": "900px"
+      },
+      {
+        "name": "mobile",
+        "value": "640px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "description": "Primary upload action.",
+      "kind": "button",
+      "html": "<button class=\"ds-primary\">Subir imagen</button>",
+      "name": "Primary Button",
+      "refersTo": "button-primary",
+      "css": ".ds-primary{background:#245c83;color:#fff;border:0;border-radius:8px;padding:11px 18px;min-height:44px;font:700 14px Manrope,system-ui,sans-serif;transition:background 150ms ease-out,transform 150ms ease-out}.ds-primary:focus-visible{outline:3px solid #367ba7;outline-offset:4px}.ds-primary:active{transform:scale(.98)}@media(hover:hover) and (pointer:fine){.ds-primary:hover{background:#194b6d}}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "description": "Supporting collection action.",
+      "kind": "button",
+      "html": "<button class=\"ds-secondary\">Actualizar</button>",
+      "name": "Secondary Button",
+      "refersTo": "button-secondary",
+      "css": ".ds-secondary{background:#fff;color:#172c3b;border:1px solid #d7e0e6;border-radius:8px;padding:11px 18px;min-height:44px;font:700 14px Manrope,system-ui,sans-serif}.ds-secondary:focus-visible{outline:3px solid #367ba7;outline-offset:4px}.ds-secondary:active{transform:scale(.98)}@media(hover:hover) and (pointer:fine){.ds-secondary:hover{background:#eaf0f4}}"
+    },
+    {
+      "description": "Destructive collection action.",
+      "kind": "button",
+      "html": "<button class=\"ds-danger\">Eliminar</button>",
+      "name": "Danger Button",
+      "refersTo": "button-danger",
+      "css": ".ds-danger{background:#a52e37;color:#fff;border:0;border-radius:8px;padding:11px 18px;min-height:44px;font:700 14px Manrope,system-ui,sans-serif}.ds-danger:focus-visible{outline:3px solid #367ba7;outline-offset:4px}.ds-danger:active{transform:scale(.98)}@media(hover:hover) and (pointer:fine){.ds-danger:hover{background:#8b222a}}"
+    },
+    {
+      "description": "Unboxed collection search.",
+      "html": "<input class=\"ds-search\" aria-label=\"Buscar imágenes\" placeholder=\"Buscar imágenes\">",
+      "css": ".ds-search{background:none;border:0;min-height:36px;font:16px Manrope,system-ui,sans-serif;color:#172c3b;caret-color:#245c83}.ds-search::placeholder{color:#526574}.ds-search:focus-visible{outline:3px solid #367ba7;outline-offset:4px}",
+      "name": "Search Field",
+      "kind": "input"
+    },
+    {
+      "description": "Wordmark and quiet workspace context.",
+      "html": "<nav class=\"ds-nav\"><strong>Lumbre</strong><span>Archivo de imágenes</span></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:12px;color:#172c3b;font-family:Manrope,system-ui,sans-serif}.ds-nav strong{font-size:26px;font-weight:800;letter-spacing:-.03em}.ds-nav span{margin-left:20px;border-left:1px solid #d7e0e6;padding-left:24px;font-size:13px;color:#526574}@media(max-width:900px){.ds-nav span{display:none}}",
+      "name": "Navigation",
+      "kind": "nav"
+    },
+    {
+      "description": "Flat paper task surface.",
+      "html": "<section class=\"ds-panel\"><h2>Subir imagen</h2></section>",
+      "css": ".ds-panel{padding:28px;background:#fff;border-radius:16px;font-family:Manrope,system-ui,sans-serif;color:#172c3b}.ds-panel h2{font-size:18px;font-weight:700;margin:0 0 20px}@media(max-width:640px){.ds-panel{padding:20px}}",
+      "name": "Upload Panel",
+      "kind": "card"
+    }
+  ],
+  "narrative": {
+    "northStar": "Museum collection interface",
+    "overview": "Lumbre is a quiet workspace for reviewing photography. Steel-blue controls and broad white surfaces support images with small utilitarian captions. The user delegated this visual direction; the interface operates as a working collection rather than a decorative catalog.",
+    "keyCharacteristics": [
+      "Images lead, with consistent crops in the collection and uncropped viewing in the preview.",
+      "Large, restrained headings and compact supporting labels.",
+      "Calm spacing and clearly bounded operating controls."
+    ],
+    "rules": [],
+    "dos": [
+      "Do let actual collection images carry the identity.",
+      "Do maintain quiet controls, clear focus and explicit empty states.",
+      "Do preserve consistent collection crops and contained full-image previews."
+    ],
+    "donts": [
+      "Don't add simulated photographs or fabricated upload results.",
+      "Don't add decorative stamps or crosshairs that obscure operating controls."
+    ]
+  }
+}

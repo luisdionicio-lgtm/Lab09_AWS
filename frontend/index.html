@@ -1,12 +1,259 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#f3f5f7"><meta name="description" content="Lumbre, tu archivo fotográfico privado. Sube y organiza imágenes de forma segura."><title>Lumbre — Archivo fotográfico</title><link rel="stylesheet" href="/styles.css"><script src="/app.js" defer></script></head>
-<body><a class="skip" href="#collection">Ir a la colección</a>
-<header><a class="brand" href="/" aria-label="Lumbre, inicio"><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 24V8h7v16zM14 24V4h6v20zM23 24V12h5v12z" fill="currentColor"/></svg>Lumbre<span>Archivo fotográfico</span></a><div class="connection"><span class="dot"></span><span id="storage">Conectando…</span></div></header>
-<main><section class="intro" aria-labelledby="title"><div class="intro-copy"><h1 id="title">Tu mirada.<br>Un lugar propio.</h1><p>Reúne las imágenes que vale la pena conservar. Una colección privada, lista para volver a ella.</p><a class="text-link" href="#collection">Explorar mi colección <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></a></div>
-<form id="upload-form" class="upload-panel"><div class="upload-heading"><h2>Añade una mirada</h2><span>Menos de 5 MB</span></div><label id="dropzone" class="dropzone" for="file"><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><rect x="5" y="8" width="30" height="25" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="14" cy="16" r="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m8 29 8-7 5 4 5-9 7 12" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><strong id="file-label">Arrastra una imagen aquí</strong><span id="file-help">o elige un archivo · JPG, PNG o WebP</span><input id="file" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="file-help"></label><div id="selected" class="selected" hidden><img id="selected-preview" alt="Vista previa de la imagen seleccionada"><div><strong id="selected-name"></strong><span id="selected-size"></span></div><button id="clear" type="button" class="icon-button" aria-label="Quitar imagen seleccionada">×</button></div><button id="upload" class="primary" type="submit" disabled>Subir imagen <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button><progress id="progress" max="100" value="0" hidden aria-label="Progreso de carga"></progress><p id="upload-status" class="status" role="status" aria-live="polite">Tus imágenes se mantienen privadas.</p></form></section>
-<section id="collection" aria-labelledby="collection-title"><div class="collection-heading"><div><h2 id="collection-title">Mi colección <span id="count">0</span></h2><p id="collection-caption">Cada imagen cuenta una parte de tu historia.</p></div><button id="refresh" class="secondary" type="button"><svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M5 8a8 8 0 0 1 14-2l1 6M4 12l1 6a8 8 0 0 0 14-2" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Actualizar</button></div><div class="filters"><label class="search"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="m15 15 5 5" stroke="currentColor" stroke-width="1.6"/></svg><input id="search" type="search" placeholder="Buscar en imágenes cargadas" aria-label="Buscar por nombre en imágenes cargadas"></label><label class="sort">Ordenar<select id="sort"><option value="new">Más recientes</option><option value="old">Más antiguas</option><option value="name">Nombre</option></select></label></div><p id="gallery-status" class="status" role="status" aria-live="polite"></p><div id="gallery" class="gallery" aria-busy="true"></div><div id="empty" class="empty" hidden><svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="12" width="44" height="40" rx="6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="m14 46 12-12 9 7 8-17 7 22" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="24" cy="24" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg><h3>Tu colección empieza con una imagen.</h3><p>Selecciona tu primera fotografía en el panel de arriba.</p><button id="choose-first" class="secondary">Elegir una imagen</button></div><button id="load-more" class="secondary more" hidden>Cargar más imágenes</button></section></main>
-<footer><span>Lumbre</span><p>Un archivo para lo que quieres conservar.</p><span>Laboratorio 09 · Gestión de imágenes</span></footer>
-<dialog id="preview" aria-labelledby="preview-name"><button id="close-preview" class="icon-button close" aria-label="Cerrar vista previa">×</button><img id="preview-image" alt=""><div class="preview-caption"><div><h2 id="preview-name"></h2><p id="preview-meta"></p></div><a id="preview-download" class="primary">Descargar</a></div></dialog>
-<dialog id="delete-dialog" aria-labelledby="delete-title"><h2 id="delete-title">¿Eliminar esta imagen?</h2><p id="delete-name"></p><p>Dejará de aparecer en tu colección. Si el bucket tiene versionado, sus versiones anteriores se conservan.</p><div class="dialog-actions"><button id="cancel-delete" class="secondary">Conservar imagen</button><button id="confirm-delete" class="danger">Eliminar imagen</button></div><p id="delete-status" class="status" role="status"></p></dialog>
-</body></html>
-
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"
+    />
+    <meta name="theme-color" content="#f3f5f7" />
+    <meta
+      name="description"
+      content="Lumbre, tu archivo fotográfico privado. Sube y organiza imágenes de forma segura."
+    />
+    <title>Lumbre — Archivo fotográfico</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#collection">Ir a la colección</a>
+    <header>
+      <a class="brand" href="/" aria-label="Lumbre, inicio"
+        ><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true">
+          <path
+            d="M4 24V8h7v16zM14 24V4h6v20zM23 24V12h5v12z"
+            fill="currentColor"
+          /></svg
+        >Lumbre<span>Archivo fotográfico</span></a
+      >
+      <div class="connection">
+        <span class="dot"></span><span id="storage">Conectando…</span>
+      </div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="title">
+        <div class="intro-copy">
+          <h1 id="title">Tu mirada.<br />Un lugar propio.</h1>
+          <p>
+            Reúne las imágenes que vale la pena conservar. Una colección
+            privada, lista para volver a ella.
+          </p>
+          <a class="text-link" href="#collection"
+            >Explorar mi colección
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="m6 9 6 6 6-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.7"
+              /></svg
+          ></a>
+        </div>
+        <form id="upload-form" class="upload-panel">
+          <div class="upload-heading">
+            <h2>Añade una mirada</h2>
+            <span>Menos de 5 MB</span>
+          </div>
+          <label id="dropzone" class="dropzone" for="file"
+            ><svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+              <rect
+                x="5"
+                y="8"
+                width="30"
+                height="25"
+                rx="5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <circle
+                cx="14"
+                cy="16"
+                r="3"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="m8 29 8-7 5 4 5-9 7 12"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              /></svg
+            ><strong id="file-label">Arrastra una imagen aquí</strong
+            ><span id="file-help">o elige un archivo · JPG, PNG o WebP</span
+            ><input
+              id="file"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              aria-describedby="file-help"
+          /></label>
+          <div id="selected" class="selected" hidden>
+            <img
+              id="selected-preview"
+              alt="Vista previa de la imagen seleccionada"
+            />
+            <div>
+              <strong id="selected-name"></strong
+              ><span id="selected-size"></span>
+            </div>
+            <button
+              id="clear"
+              type="button"
+              class="icon-button"
+              aria-label="Quitar imagen seleccionada"
+            >
+              ×
+            </button>
+          </div>
+          <button id="upload" class="primary" type="submit" disabled>
+            Subir imagen
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 19V5m-6 6 6-6 6 6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+              />
+            </svg></button
+          ><progress
+            id="progress"
+            max="100"
+            value="0"
+            hidden
+            aria-label="Progreso de carga"
+          ></progress>
+          <p id="upload-status" class="status" role="status" aria-live="polite">
+            Tus imágenes se mantienen privadas.
+          </p>
+        </form>
+      </section>
+      <section id="collection" aria-labelledby="collection-title">
+        <div class="collection-heading">
+          <div>
+            <h2 id="collection-title">
+              Mi colección <span id="count">0</span>
+            </h2>
+            <p id="collection-caption">
+              Cada imagen cuenta una parte de tu historia.
+            </p>
+          </div>
+          <button id="refresh" class="secondary" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20 7v5h-5M4 17v-5h5M5 8a8 8 0 0 1 14-2l1 6M4 12l1 6a8 8 0 0 0 14-2"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              /></svg
+            >Actualizar
+          </button>
+        </div>
+        <div class="filters">
+          <label class="search"
+            ><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+              <circle
+                cx="10"
+                cy="10"
+                r="6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+              />
+              <path
+                d="m15 15 5 5"
+                stroke="currentColor"
+                stroke-width="1.6"
+              /></svg
+            ><input
+              id="search"
+              type="search"
+              placeholder="Buscar en imágenes cargadas"
+              aria-label="Buscar por nombre en imágenes cargadas" /></label
+          ><label class="sort"
+            >Ordenar<select id="sort">
+              <option value="new">Más recientes</option>
+              <option value="old">Más antiguas</option>
+              <option value="name">Nombre</option>
+            </select></label
+          >
+        </div>
+        <p
+          id="gallery-status"
+          class="status"
+          role="status"
+          aria-live="polite"
+        ></p>
+        <div id="gallery" class="gallery" aria-busy="true"></div>
+        <div id="empty" class="empty" hidden>
+          <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+            <rect
+              x="10"
+              y="12"
+              width="44"
+              height="40"
+              rx="6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="m14 46 12-12 9 7 8-17 7 22"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <circle
+              cx="24"
+              cy="24"
+              r="4"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+          </svg>
+          <h3>Tu colección empieza con una imagen.</h3>
+          <p>Selecciona tu primera fotografía en el panel de arriba.</p>
+          <button id="choose-first" class="secondary">Elegir una imagen</button>
+        </div>
+        <button id="load-more" class="secondary more" hidden>
+          Cargar más imágenes
+        </button>
+      </section>
+    </main>
+    <footer>
+      <span>Lumbre</span>
+      <p>Un archivo para lo que quieres conservar.</p>
+      <span>Laboratorio 09 · Gestión de imágenes</span>
+    </footer>
+    <dialog id="preview" aria-labelledby="preview-name">
+      <button
+        id="close-preview"
+        class="icon-button close"
+        aria-label="Cerrar vista previa"
+      >
+        ×</button
+      ><img id="preview-image" alt="" />
+      <div class="preview-caption">
+        <div>
+          <h2 id="preview-name"></h2>
+          <p id="preview-meta"></p>
+        </div>
+        <a id="preview-download" class="primary">Descargar</a>
+      </div>
+    </dialog>
+    <dialog id="delete-dialog" aria-labelledby="delete-title">
+      <h2 id="delete-title">¿Eliminar esta imagen?</h2>
+      <p id="delete-name"></p>
+      <p>
+        Dejará de aparecer en tu colección. Si el bucket tiene versionado, sus
+        versiones anteriores se conservan.
+      </p>
+      <div class="dialog-actions">
+        <button id="cancel-delete" class="secondary">Conservar imagen</button
+        ><button id="confirm-delete" class="danger">Eliminar imagen</button>
+      </div>
+      <p id="delete-status" class="status" role="status"></p>
+    </dialog>
+  </body>
+</html>
