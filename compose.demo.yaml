@@ -1,0 +1,31 @@
+services:
+  app:
+    volumes: !reset []
+    environment:
+      AWS_PROFILE: ""
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      S3_BUCKET: lumbre-demo
+      S3_ENDPOINT: http://localstack:4566
+      S3_PUBLIC_ENDPOINT: http://localhost:9000
+      STORAGE_LABEL: LocalStack local
+    depends_on:
+      storage-init:
+        condition: service_completed_successfully
+  localstack:
+    image: localstack/localstack:4.10.0
+    ports: ["127.0.0.1:9000:4566"]
+    environment:
+      SERVICES: s3
+      AWS_DEFAULT_REGION: us-east-1
+      DISABLE_EVENTS: 1
+    tmpfs: [/var/lib/localstack]
+  storage-init:
+    build: .
+    entrypoint: ["node", "backend/init-demo.js"]
+    depends_on: [localstack]
+    environment:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_REGION: us-east-1
+
